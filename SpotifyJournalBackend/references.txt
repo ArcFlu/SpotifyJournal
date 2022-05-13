@@ -28,7 +28,8 @@ Edge case: previous day
 // AWS Lambda
 zip -r function.zip .
 command to properly zip for AWS
-
+remember to update .gitignore
+CRON
 
 
 // Additional features: Look up the mood of the songs 
