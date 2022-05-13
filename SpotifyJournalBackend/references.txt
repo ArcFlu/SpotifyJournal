@@ -25,6 +25,14 @@ Edge case: previous day
 // I will also have to account for duplicates, I'll probably actually store that data so we can see
 // you played it over and over.
 
+// AWS Lambda
+zip -r function.zip .
+command to properly zip for AWS
+
+
 
 // Additional features: Look up the mood of the songs 
 // Energy of your music throughout the day
+
+// Bug Backlog
+AWS Lambda uses their server's time

@@ -16,10 +16,10 @@ var spotifyApi = new SpotifyWebApi(userCredentials);
 const refresh_token = process.env.REFRESH_TOKEN;
 spotifyApi.setRefreshToken(refresh_token);
 
-const getRecent = () => {
-spotifyApi.refreshAccessToken()
+const getRecent = async () => {
+await spotifyApi.refreshAccessToken()
 .then(
-    function(data) {
+    async function(data) {
       console.log('The access token has been refreshed!');
   
       // Save the access token so that it's used in future calls
@@ -29,9 +29,9 @@ spotifyApi.refreshAccessToken()
       const currentTime = new Date().getTime();
       const pastHourTime = currentTime - 3_600_000;
 
-      spotifyApi.getMyRecentlyPlayedTracks({after: pastHourTime, limit: 50,})
+      await spotifyApi.getMyRecentlyPlayedTracks({after: pastHourTime, limit: 50,})
         .then(
-            (data) => {
+            async (data) => {
                 const songList = data.body.items;
                 let nameList = [];
                 for (let item of songList){
@@ -39,14 +39,16 @@ spotifyApi.refreshAccessToken()
                 }
                 
                 // after parsing through API data, send it to the database
-                recent.insertRecent(songList);
+                await recent.insertRecent(songList);
+                return("Success!");
             }
         )
     },
     function(err) {
       console.log('Could not refresh access token', err);
     }
-  )
+    )
 }
 
+// getRecent();
 exports.getRecent = getRecent;

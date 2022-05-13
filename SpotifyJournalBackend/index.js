@@ -1,6 +1,6 @@
-const getRecent = require('./getRecent');
+const getRecent = require('./postauth');
 
-exports.handler =  async function() {
-    getRecent();
-    return;
+exports.handler = async () => {
+    const lambdaOut = await getRecent.getRecent();
+    return lambdaOut;
 }
