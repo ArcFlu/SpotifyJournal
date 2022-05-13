@@ -35,4 +35,4 @@ command to properly zip for AWS
 // Energy of your music throughout the day
 
 // Bug Backlog
-AWS Lambda uses their server's time
+AWS Lambda uses UTC, convert to UTC

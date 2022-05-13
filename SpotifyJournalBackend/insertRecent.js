@@ -10,12 +10,12 @@ const dbName = "personalDB";
 const insertRecent = async (itemList) => {
     try {
         await client.connect();
-        console.log("Connected correctly to MongoDB server");
+        // console.log("Connected correctly to MongoDB server");
         const db = client.db(dbName);
 
 
         // Calculate the time for the past hour, this gets rid of next day cases.
-        const currentTime = new Date().getTime();
+        const currentTime = Date.now();
         const pastHourTime = currentTime - 3_600_000;
 
         // use collection 
@@ -35,8 +35,8 @@ const insertRecent = async (itemList) => {
         let testDocument = {
             recentList,
             nameList,
-            thisHour: new Date(pastHourTime).getHours(),
-            createdDate: new Date(),
+            currentHourUTC: currentTime,
+            pastHourUTC: pastHourTime,
         };
         
 
@@ -47,8 +47,8 @@ const insertRecent = async (itemList) => {
         const myDocs = await col.find(testDocument).toArray();
 
         // Print this
-        console.log("Finished inserting recent Spotify data for " + todayDate +"!");
-        console.log(nameList);
+        // console.log("Finished inserting recent Spotify data for " + todayDate +"!");
+        // console.log(nameList);
 
     } catch (err) {
         console.log(err.stack);

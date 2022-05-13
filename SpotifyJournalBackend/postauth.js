@@ -20,13 +20,13 @@ const getRecent = async () => {
 await spotifyApi.refreshAccessToken()
 .then(
     async function(data) {
-      console.log('The access token has been refreshed!');
+    //   console.log('The access token has been refreshed!');
   
       // Save the access token so that it's used in future calls
       spotifyApi.setAccessToken(data.body['access_token']);
 
       // get data every hour
-      const currentTime = new Date().getTime();
+      const currentTime = Date.now();
       const pastHourTime = currentTime - 3_600_000;
 
       await spotifyApi.getMyRecentlyPlayedTracks({after: pastHourTime, limit: 50,})
