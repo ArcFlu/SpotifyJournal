@@ -26,8 +26,8 @@ const insertRecent = async (itemList) => {
         let recentList = [];
         // let nameList = [];
         for (let item of itemList){
-            // delete item.track.album.available_markets;
-            // delete item.track.available_markets;
+            delete item.track.album.available_markets;
+            delete item.track.available_markets;
             recentList.push(item.track);
             // nameList.push(item.track.name);
         }
