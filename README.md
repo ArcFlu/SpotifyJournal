@@ -4,22 +4,22 @@
 
 Backend Notes:
 
-// Setup RESTful API locally
+// Setup RESTful API locally\
 https://www.codementor.io/@olatundegaruba/nodejs-restful-apis-in-10-minutes-q0sgsfhbd
 
-// Express
+// Express\
 https://expressjs.com/en/starter/basic-routing.html
 
-// Deleting Avaiable Markets from Album and Track Data
+// Deleting Available Markets from Album and Track Data\
 124821 / 40829 = 3.0571652502;
 
-Collection Name	Documents	Documents Size	Documents Avg	Indexes	Index Size	Index Avg
-recentAM        1	        121.91KB	    121.91KB	    1	    4KB	        4KB
-recentNAM       1	        39.89KB	        39.89KB	        1	    4KB	        4KB
-By removing this unnecessary information, it reduces the document size by 3 times!!
+Collection Name	Documents	Documents Size	Documents Avg	Indexes	Index Size	Index Avg\
+recentAM        1	        121.91KB	    121.91KB	    1	    4KB	        4KB\
+recentNAM       1	        39.89KB	        39.89KB	        1	    4KB	        4KB\
+By removing this unnecessary information, it reduces the document size by 3 times!!\
 
-// Authorization Notes
-When planning authorization, we need to know/figure out how login will work.
+// Authorization Notes\
+When planning authorization, we need to know/figure out how login will work.\
 Login consists of initial authorization and post authorization, so we need to know
 how we will persist the user's credentials.
 
