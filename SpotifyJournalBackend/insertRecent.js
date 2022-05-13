@@ -13,8 +13,13 @@ const insertRecent = async (itemList) => {
         console.log("Connected correctly to MongoDB server");
         const db = client.db(dbName);
 
+
+        // Calculate the time for the past hour, this gets rid of next day cases.
+        const currentTime = new Date().getTime();
+        const pastHourTime = currentTime - 3_600_000;
+
         // use collection 
-        todayDate = new Date().toLocaleDateString("en-us");
+        todayDate = new Date(pastHourTime).toLocaleDateString("en-us");
         const col = db.collection(todayDate);
 
         // remove information
@@ -30,8 +35,8 @@ const insertRecent = async (itemList) => {
         let testDocument = {
             recentList,
             nameList,
+            thisHour: new Date(pastHourTime).getHours(),
             createdDate: new Date(),
-            thisHour: new Date().getHours() - 1,
         };
         
 
