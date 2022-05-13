@@ -24,21 +24,20 @@ const insertRecent = async (itemList) => {
 
         // remove information
         let recentList = [];
-        let nameList = [];
-        for (let item of itemList){
-            delete item.track.album.available_markets;
-            delete item.track.available_markets;
-            recentList.push(item.track);
-            nameList.push(item.track.name);
-        }
+        // let nameList = [];
+        // for (let item of itemList){
+        //     delete item.track.album.available_markets;
+        //     delete item.track.available_markets;
+        //     recentList.push(item.track);
+        //     nameList.push(item.track.name);
+        // }
         
         let testDocument = {
             recentList,
-            nameList,
-            currentHourUTC: new Date(currentTime).getUTCHours(),
             pastHourUTC: new Date(pastHourTime).getUTCHours(),
-            currentUTC: currentTime,
             pastUTC: pastHourTime,
+            currentHourUTC: new Date(currentTime).getUTCHours(),
+            currentUTC: currentTime,
         };
         
 
