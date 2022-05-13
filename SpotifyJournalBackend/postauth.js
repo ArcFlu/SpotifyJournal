@@ -15,6 +15,8 @@ var userCredentials = {
 var spotifyApi = new SpotifyWebApi(userCredentials);
 const refresh_token = process.env.REFRESH_TOKEN;
 spotifyApi.setRefreshToken(refresh_token);
+
+const getRecent = () => {
 spotifyApi.refreshAccessToken()
 .then(
     function(data) {
@@ -45,5 +47,6 @@ spotifyApi.refreshAccessToken()
       console.log('Could not refresh access token', err);
     }
   )
+}
 
-
+exports.getRecent = getRecent;
