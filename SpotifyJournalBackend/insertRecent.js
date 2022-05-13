@@ -35,8 +35,10 @@ const insertRecent = async (itemList) => {
         let testDocument = {
             recentList,
             nameList,
-            currentHourUTC: currentTime,
-            pastHourUTC: pastHourTime,
+            currentHourUTC: new Date(currentTime).getUTCHours(),
+            pastHourUTC: new Date(pastHourTime).getUTCHours(),
+            currentUTC: currentTime,
+            pastUTC: pastHourTime,
         };
         
 
