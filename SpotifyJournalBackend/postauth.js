@@ -1,7 +1,6 @@
 require("dotenv").config();
 const recent = require('./insertRecent');
-const express = require("express");
-const app = express();
+const pastHourTime = require('./utility').pastHourTime;
 var SpotifyWebApi = require("spotify-web-api-node");
 
 // Parameters for authorization
@@ -25,22 +24,18 @@ await spotifyApi.refreshAccessToken()
       // Save the access token so that it's used in future calls
       spotifyApi.setAccessToken(data.body['access_token']);
 
-      // get data every hour
-      const currentTime = Date.now();
-      const pastHourTime = currentTime - 3_600_000;
-
-      await spotifyApi.getMyRecentlyPlayedTracks({after: pastHourTime, limit: 50,})
+      await spotifyApi.getMyRecentlyPlayedTracks({after: pastHourTime, limit: 20,})
         .then(
             async (data) => {
                 const songList = data.body.items;
-                let nameList = [];
-                for (let item of songList){
-                    nameList.push(item.track.name);
-                }
-                
-                // after parsing through API data, send it to the database
-                await recent.insertRecent(songList);
-                return("Success!");
+                // console.log(data);
+                // get user information then send data to the database
+                await spotifyApi.getMe()
+                .then(
+                    async (userData) => {
+                        await recent.insertRecent(songList, userData);
+                    }
+                )
             }
         )
     },
@@ -48,6 +43,7 @@ await spotifyApi.refreshAccessToken()
       console.log('Could not refresh access token', err);
     }
     )
+    return("Success!");
 }
 
 // getRecent();

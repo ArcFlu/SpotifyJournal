@@ -1,56 +1,56 @@
 const { MongoClient } = require("mongodb");
 var bson = require("bson");
+const { Cursor } = require("mongoose");
+const { msToHour } = require("./utility");
 require('dotenv').config();
+const currentHourTime = require('./utility').currentHourTime;
+const pastHourTime = require('./utility').pastHourTime;
+const unixTimestamp = require('./utility').unixTimestamp;
+
 
 // Replace the following with your Atlas connection string          
 const url = process.env.DB_CONN;
 const client = new MongoClient(url);
 const dbName = "personalDB";
 
-const insertRecent = async (itemList) => {
+
+const insertRecent = async (itemList, userData) => {
+    const userID = userData.body.id;
     try {
         await client.connect();
         // console.log("Connected correctly to MongoDB server");
         const db = client.db(dbName);
 
-
-        // Calculate the time for the past hour, this gets rid of next day cases.
-        const currentTime = Date.now();
-        const pastHourTime = currentTime - 3_600_000;
-
         // use collection 
-        todayDate = new Date(pastHourTime).toLocaleDateString("en-us");
-        const col = db.collection(todayDate);
+        const col = db.collection(userID, {
+            timeseries: {
+                timeField: "pastUTC",
+                granularity: "hours",
+            }
+        });
 
-        // remove information
+        // remove market information
         let recentList = [];
-        // let nameList = [];
         for (let item of itemList){
             delete item.track.album.available_markets;
             delete item.track.available_markets;
             recentList.push(item.track);
-            // nameList.push(item.track.name);
         }
         
         let testDocument = {
             recentList,
             pastHourUTC: new Date(pastHourTime).getUTCHours(),
-            pastUTC: pastHourTime,
-            currentHourUTC: new Date(currentTime).getUTCHours(),
-            currentUTC: currentTime,
+            currentHourUTC: new Date(currentHourTime).getUTCHours(),
+            pastHourUnixTimeStamp: pastHourTime,
+            currentHourUnixTimeStamp: currentHourTime,
+            createdUnixTimestamp: unixTimestamp,
         };
         
-
         // inserts the document and waits for a promise to read
         const p = await col.insertOne(testDocument);
-
-        // now we find one document 
-        const myDocs = await col.find(testDocument).toArray();
-
-        // Print this
-        // console.log("Finished inserting recent Spotify data for " + todayDate +"!");
-        // console.log(nameList);
-
+        // const f = await col.findOne(testDocument);
+        // console.log(f);
+        
     } catch (err) {
         console.log(err.stack);
     }
