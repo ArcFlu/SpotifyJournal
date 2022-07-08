@@ -1,0 +1,29 @@
+import {axios} from "axios"
+
+const getDates = () => {
+    var data = JSON.stringify({
+        "collection": "<COLLECTION_NAME>",
+        "database": "personalDB",
+        "dataSource": "SpotifyJournal",
+        "projection": {
+            "_id": 1
+        }
+    });
+
+    var config = {
+        method: 'post',
+        url: 'https://data.mongodb-api.com/app/data-owzhn/endpoint/data/beta/action/findOne',
+        headers: {
+            'Content-Type': 'application/json',
+            'Access-Control-Request-Headers': '*',
+            'api-key': 'c8rYPlAsHHUdltilmruSgwB4hz9Yt1H8jg516JhKfRgNmoYMFo4CS7xJ5PbCJnkB'
+        },
+        data : data
+    };
+
+    const instance = axios.create(config);
+
+    return instance;
+};
+
+export default getDates

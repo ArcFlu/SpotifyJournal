@@ -1,11 +1,10 @@
 import './App.css';
+import TestComponent from './components/TestComponent';
 
 function App() {
   return (
     <div className="App">
-        <div>
-            bruh
-        </div>
+        <TestComponent/>
     </div>
   );
 }
