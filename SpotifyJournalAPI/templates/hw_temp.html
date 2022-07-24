@@ -1,0 +1,6 @@
+from flask import url_for
+
+  {% for element in webList %}
+      <p>{{ element }} </p>
+      <img src={{ element[2] }} width="500" height="600"/>
+  {% endfor %}
