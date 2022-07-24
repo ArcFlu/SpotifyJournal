@@ -16,7 +16,7 @@ const getDates = () => {
         headers: {
             'Content-Type': 'application/json',
             'Access-Control-Request-Headers': '*',
-            'api-key': 'c8rYPlAsHHUdltilmruSgwB4hz9Yt1H8jg516JhKfRgNmoYMFo4CS7xJ5PbCJnkB'
+            'api-key': ''
         },
         data : data
     };
